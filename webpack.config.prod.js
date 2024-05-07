@@ -12,7 +12,7 @@ module.exports = {
     filename: '[name].[chunkhash].js',
     chunkFilename: '[name].[chunkhash].bundle.js',
     path: path.resolve(__dirname, 'dist'),
-    publicPath: '/projects/kanaquiz/',
+    publicPath: '/kanaquiz/',
   },
   resolve: {
     extensions: ['.js', '.jsx']
