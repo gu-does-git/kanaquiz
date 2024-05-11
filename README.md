@@ -31,3 +31,13 @@ See live at https://kana.pro/
 ### Futurely
 
 - [ ] rebuild this project on a more modern framework and using better UI elements.
+
+---
+
+#### Cool projects being used
+
+[AstroJS](https://astro.build/)
+[TailwindCSS Integration](https://docs.astro.build/en/guides/integrations-guide/tailwind/)
+[pReact Integration](https://docs.astro.build/en/guides/integrations-guide/preact/)
+[astro-themes](https://github.com/alex-grover/astro-themes)
+[astro-icon](https://github.com/natemoo-re/astro-icon)

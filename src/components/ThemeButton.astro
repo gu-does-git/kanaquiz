@@ -1,0 +1,29 @@
+---
+import { Icon } from "astro-icon/components";
+---
+
+<button id="themeButton" class="rounded-lg p-0 [&>*]:transition text-xl">
+  <Icon
+    name="material-symbols:dark-mode-rounded"
+    class="text-gray-500 hover:text-gray-700 block dark:hidden"
+  />
+  <Icon
+    name="material-symbols:light-mode-rounded"
+    class="text-yellow-300 hover:text-yellow-500 hidden dark:block"
+  />
+</button>
+<script>
+  function handleClick() {
+    // Get current theme
+    const currentTheme =
+      document.documentElement.attributes.getNamedItem("data-theme")?.value;
+
+    // Toggle between the themes based on the current theme
+    document.dispatchEvent(
+      new CustomEvent("set-theme", {
+        detail: currentTheme === "dark" ? "light" : "dark",
+      })
+    );
+  }
+  document.getElementById("themeButton").addEventListener("click", handleClick);
+</script>
