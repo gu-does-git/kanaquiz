@@ -26,11 +26,130 @@
 			}, 1000)
 		}, 500)
 	}
+</script>
+<script>
+	import { kanaDictionary } from '../data/kanaDic'
+	import { $stage1 } from '../stores/quiz'
+
+	var askableKanaKeys = []
+	var askableRomajis = []
+	var previousQuestion = ''
+	var previousAnswer = ''
+	var stageProgress = 0
 
 	// $stage1
+	var selectedOptions = []
 	$stage1.subscribe((value, oldValue) => {
-		console.log(value)
+		selectedOptions = JSON.parse(value.selectedOptions)
 	})
+
+	// All selected groups on the last screen from the KanaDictionary
+	var allSelectedGroups = {}
+
+	// All the kanas from the selected groups
+	var allKanas = {}
+	var allRomaji = []
+
+	// Separate all the data
+	Object.keys(kanaDictionary).forEach((kanaType) => {
+		// console.log(kanaType); // 'hiragana' or 'katakana'
+		Object.keys(kanaDictionary[kanaType]).forEach((groupName) => {
+			// If Kana Group is in the options selected in the stage 0, go ahead.
+			if (selectedOptions.includes(groupName)) {
+				var element = kanaDictionary[kanaType][groupName]
+				// add it to the Selected Groups
+				allSelectedGroups[groupName] = element
+
+				// add it to the All Kanas
+				allKanas = Object.assign(allKanas, element['characters'])
+
+				Object.keys(element['characters']).forEach((key) => {
+					// let's add all askable kana keys to array
+					allRomaji.push(element['characters'][key][0])
+				})
+			}
+		})
+	})
+
+	// Separate all Unique Romaji for options
+	var _allUniqueRomaji = allRomaji.filter((item, index) => allRomaji.indexOf(item) === index)
+
+	console.log('allSelectedGroups', allSelectedGroups)
+	console.log('allKanas', allKanas)
+	console.log('allRomaji', allRomaji)
+	console.log('_allUniqueRomaji', _allUniqueRomaji)
+
+	// Generate all questions
+	var questions = []
+	const randomProperty = (obj) => {
+		var keys = Object.keys(obj)
+		return keys[(keys.length * Math.random()) << 0]
+	}
+
+	while (questions.length < 50) {
+		var index = 1
+		var question = randomProperty(allKanas)
+		var options = [
+			// Right answer
+			{
+				isRight: true,
+				value: allKanas[question][0]
+			}
+		]
+
+		// Separate more questions that are not the right answer
+		var clonedArr = _allUniqueRomaji.slice(0)
+		const rightAnswerIndex = clonedArr.indexOf(allKanas[question][0])
+		if (rightAnswerIndex > -1) {
+			// only splice array when item is found
+			clonedArr.splice(rightAnswerIndex, 1) // 2nd parameter means remove one item only
+		}
+		clonedArr = clonedArr.sort(() => 0.5 - Math.random())
+		while (options.length < 3) {
+			options.push({
+				isRight: false,
+				value: clonedArr.pop()
+			})
+		}
+
+		questions.push({
+			id: index,
+			question: question,
+			options: options.sort(() => 0.5 - Math.random())
+		})
+
+		index++
+	}
+	console.log('questions', questions)
+
+	// Get the template HTML
+	var template = document.getElementById('template').cloneNode(true)
+
+	// Remove the template from page
+	document.getElementById('template').remove()
+
+	const changeTemplateValues = (template, question) => {
+		// Change character
+		template.children['character'].children[0].innerHTML = question.question
+
+		// Change answers
+		var templateAnswer = template.children['answers'].children[0].cloneNode(true) // Get the template
+		template.children['answers'].innerHTML = '' // Clear children
+		question.options.forEach((option) => {
+			var ele = templateAnswer.cloneNode(true)
+			ele.innerHTML = option.value
+			template.children['answers'].appendChild(ele)
+		})
+
+		console.log(template, question)
+		return template.innerHTML
+	}
+
+	var activeQuestion = questions.pop()
+	var allPastQuestions = [activeQuestion]
+
+	document.getElementById('parent').innerHTML = changeTemplateValues(template, activeQuestion)
+	console.log(template)
 </script>
 
 <!-- Stage Description -->
@@ -40,31 +159,29 @@
 </div>
 
 <!-- Parent div -->
-<div id="parent" class="opacity-0 transition-opacity">
+<div id="parent" class="opacity-0 transition-opacity"></div>
+
+<!-- TEMPLATE -->
+<div id="template" class="hidden">
 	<!-- Previous Result / Question -->
 	<div
+		id="previous_result"
 		class="mx-auto block w-2/5 min-w-80 rounded-lg border-2 bg-slate-200 py-2 text-center dark:bg-slate-800"
 	>
 		<h1 class="text-base lg:text-lg">Let's go! Which character is this?</h1>
 	</div>
 
 	<!-- Character  -->
-	<div class="my-16 mt-12 text-center lg:my-20 lg:mt-16">
+	<div id="character" class="my-16 mt-12 text-center lg:my-20 lg:mt-16">
 		<h1 class="align-middle font-jp text-8xl lg:text-9xl">
 			<span>ちょ</span>
 		</h1>
 	</div>
 
 	<!-- Answers -->
-	<div class="mx-auto grid w-2/5 min-w-80 grid-cols-3 gap-10 xl:gap-20">
+	<div id="answers" class="mx-auto grid w-2/5 min-w-80 grid-cols-3 gap-10 xl:gap-20">
 		<button class="rounded-lg border-2 bg-slate-200 py-4 text-lg dark:bg-slate-800 xl:text-2xl"
 			>fa</button
-		>
-		<button class="rounded-lg border-2 bg-slate-200 py-4 text-lg dark:bg-slate-800 xl:text-2xl"
-			>su</button
-		>
-		<button class="rounded-lg border-2 bg-slate-200 py-4 text-lg dark:bg-slate-800 xl:text-2xl"
-			>de</button
 		>
 	</div>
 </div>
