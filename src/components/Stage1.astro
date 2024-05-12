@@ -1,5 +1,41 @@
----
+<script>
+	import { stage, $stage1 } from '../stores/quiz.js'
 
----
+	// // stage
+	// stage.subscribe((value, oldValue) => {
+	// 	document.getElementById('store-stage').innerHTML = value.toString()
+	// })
 
-<h1>This is stage 1</h1>
+	// // $stage0
+	// $stage0.subscribe((value, oldValue) => {
+	// 	const node = document.getElementById('Stage0-list')
+	// 	console.log(value)
+	// 	node.innerHTML = JSON.stringify(value, null, '\t')
+	// })
+</script>
+
+<!-- Previous Result / Question -->
+<div
+	class="mx-auto block w-2/5 min-w-80 rounded-lg border-2 bg-slate-200 py-2 text-center dark:bg-slate-800"
+>
+	<h1 class="text-base lg:text-lg">Let's go! Which character is this?</h1>
+</div>
+
+<!-- Character  -->
+<div class="my-16 mt-12 text-center lg:my-20 lg:mt-16">
+	<h1 class="align-middle font-jp text-8xl lg:text-9xl">は</h1>
+</div>
+
+<!-- Answers -->
+
+<div class="mx-auto grid w-2/5 min-w-80 grid-cols-3 gap-10 xl:gap-20">
+	<button class="rounded-lg border-2 bg-slate-200 py-4 text-lg dark:bg-slate-800 xl:text-2xl"
+		>fa</button
+	>
+	<button class="rounded-lg border-2 bg-slate-200 py-4 text-lg dark:bg-slate-800 xl:text-2xl"
+		>su</button
+	>
+	<button class="rounded-lg border-2 bg-slate-200 py-4 text-lg dark:bg-slate-800 xl:text-2xl"
+		>de</button
+	>
+</div>

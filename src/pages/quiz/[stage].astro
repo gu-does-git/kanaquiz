@@ -15,10 +15,6 @@ const { stage } = Astro.params
 <Layout title="Welcome to Kanaquiz!">
 	<Header />
 	<main class="m-auto text-xl">
-		<h1 class="mb-4 text-center text-6xl font-bold">
-			Good quiz, <span class="text-green-500">stranger</span>!
-		</h1>
-
 		{stage == '1' && <Stage1 />}
 		{stage == '2' && <Stage2 />}
 	</main>

@@ -31,7 +31,7 @@ var groupRows = [
 ]
 ---
 
-<form action="">
+<form id="stage0-form" action="">
 	<h1 class="mb-4 text-center text-6xl font-bold">
 		Welcome to <span class="text-green-500">KanaQuiz</span>
 	</h1>
@@ -41,15 +41,11 @@ var groupRows = [
 
 	<!-- Group of Characters -->
 	<div class="mb-4 grid grid-cols-1 gap-8 sm:grid-cols-2">
-		{groupRows.map((group) => (
-                        <div
-                class="relative divide-y-2 divide-gray-200 overflow-hidden rounded-lg border-2 dark:divide-gray-400 dark:border-gray-400"
-            >
+		{ groupRows.map((group) => (
+            <div class="relative divide-y-2 divide-gray-200 overflow-hidden rounded-lg border-2 dark:divide-gray-400 dark:border-gray-400">
                 <!-- Panel Header -->
                 <div class="bg-slate-200 p-3 text-center dark:bg-slate-800">
-                    <span class="font-bold" set:html={group.key == 'hiragana'? 'Hiragana · <span class="font-jp">ひらがな' : 'Katakana · <span class="font-jp">カタカナ'}>
-                        
-                        </span></span>
+                    <span class="font-bold" set:html={group.key == 'hiragana'? 'Hiragana · <span class="font-jp">ひらがな' : 'Katakana · <span class="font-jp">カタカナ'}/>
                 </div>
     
                 <!-- Panel Body -->
@@ -58,7 +54,7 @@ var groupRows = [
                         group.rows.map((item) => (
                             <div class="choose-row inline-flex items-center">
                                 <label class="cursor-pointer">
-                                    <input type="checkbox" class="accent-green-500" data-type={group.key} />
+                                    <input type="checkbox" class="accent-green-500" name={item.groupName} data-type={group.key} />
                                     <span
                                         class="font-jp text-base"
                                         data-kana={Object.keys(item.characters)
@@ -105,20 +101,24 @@ var groupRows = [
                     >
                 </div>
             </div>
-            ))}
+		))}
         
 	</div>
 
 	<!-- Start the quiz -->
 	<div class="p-6 text-center">
 		<button
-			class="rounded-md bg-slate-400 p-2 px-4 transition-transform hover:scale-105 dark:bg-slate-500"
+			id="start-button"
+			class="rounded-md bg-slate-400 p-2 px-4 hover:scale-105 dark:bg-slate-500 disabled:opacity-75 transition-all"
+			disabled
 		>
 			<span class="text-slate-100">Start the Quiz!</span>
 		</button>
 	</div>
 </form>
 <script>
+import { check } from "prettier"
+
 	// Hover function on the "choose-row" divs:
 	var data_kana_elements = document.querySelectorAll('[data-kana]')
 	data_kana_elements.forEach((element) => {
@@ -141,7 +141,8 @@ var groupRows = [
 				`input[type="checkbox"][data-type="${element.getAttribute('data-option')}"]`
 			)
 			checkboxes.forEach((element) => {
-				element.checked = true
+				element.checked = true;
+				element.dispatchEvent(new Event("change"));
 			})
 		})
 	})
@@ -154,8 +155,36 @@ var groupRows = [
 				`input[type="checkbox"][data-type="${element.getAttribute('data-option')}"]`
 			)
 			checkboxes.forEach((element) => {
-				element.checked = false
+				element.checked = false;
+				element.dispatchEvent(new Event("change"));
 			})
 		})
 	})
+
+	// On-change of input values in form, disable or enable start button
+	document.querySelectorAll("#stage0-form input").forEach((input) => {
+		input.addEventListener("change", (e) => {
+			const formData = new FormData(document.querySelector("#stage0-form"));
+  			const formProps = Object.keys(Object.fromEntries(formData));
+			if(formProps.length > 0) {
+				  document.getElementById('start-button').removeAttribute("disabled");
+			} else {
+				document.getElementById('start-button').setAttribute("disabled", "true");
+			}
+		})
+	})
+
+	import { stage, $stage0 } from '../stores/quiz.js'
+	document.querySelector("#stage0-form").addEventListener("submit", (e) => {
+		e.preventDefault(); //stop form from submitting
+		const formData = new FormData(e.target);
+  		const formProps = Object.fromEntries(formData);
+
+		const selectedOptions = Object.keys(formProps);
+
+		stage.set('1')
+		$stage0.setKey('selectedOptions', JSON.stringify(selectedOptions));
+
+		window.location.href = 'quiz/1';
+	});
 </script>

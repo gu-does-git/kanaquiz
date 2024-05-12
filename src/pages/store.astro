@@ -1,0 +1,33 @@
+---
+import Layout from '../layouts/Layout.astro'
+import Header from '../components/Header.astro'
+---
+
+<script>
+	import { stage, $stage1 } from '../stores/quiz.js'
+
+	// stage
+	stage.subscribe((value, oldValue) => {
+		document.getElementById('store-stage').innerHTML = value.toString()
+	})
+
+	// $stage1
+	$stage1.subscribe((value, oldValue) => {
+		const node = document.getElementById('Stage1-list')
+		console.log(value)
+		node.innerHTML = JSON.stringify(value, null, '\t')
+	})
+</script>
+<Layout title="Welcome to Kanaquiz!">
+	<Header />
+	<main class="m-auto text-xl">
+		<h1 class="mb-4 text-center text-6xl font-bold">
+			Right now the stage is <span id="store-stage" class="text-green-500"></span>
+		</h1>
+
+		<div class="py-4">
+			<h1 class="mb-4 text-3xl font-bold">Stage0 Info</h1>
+			<pre><code class="text-xs" id="Stage1-list" /></pre>
+		</div>
+	</main>
+</Layout>

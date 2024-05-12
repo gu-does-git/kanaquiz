@@ -42,3 +42,5 @@ See live at https://kana.pro/
 [astro-themes](https://github.com/alex-grover/astro-themes)
 [astro-icon](https://github.com/natemoo-re/astro-icon)
 [Astro Google Fonts Optimizer](https://github.com/sebholstein/astro-google-fonts-optimizer)
+[nanostores](https://github.com/nanostores/nanostores)
+[nanostores/persistent](https://github.com/nanostores/persistent)
