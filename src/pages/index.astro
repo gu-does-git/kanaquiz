@@ -1,104 +1,91 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import Card from "../components/Card.astro";
-import Header from "../components/Header.astro";
+import Layout from '../layouts/Layout.astro'
+import Card from '../components/Card.astro'
+import Header from '../components/Header.astro'
 ---
 
-<Layout title="Welcome to Kanaquiz.">
-  <Header />
-  <main>
-    <h1>
-      Welcome to <span class="text-green-500 dark:text-fuchsia-300"
-        >Kanaquiz</span
-      >
-    </h1>
-    <p class="instructions">
-      To get started, open the directory <code>src/pages</code> in your project.<br
-      />
-      <strong>Code Challenge:</strong> Tweak the "Welcome to Astro" message above.
-    </p>
-    <ul role="list" class="link-card-grid">
-      <Card
-        href="https://docs.astro.build/"
-        title="Documentation"
-        body="Learn how Astro works and explore the official API docs."
-      />
-      <Card
-        href="https://astro.build/integrations/"
-        title="Integrations"
-        body="Supercharge your project with new frameworks and libraries."
-      />
-      <Card
-        href="https://astro.build/themes/"
-        title="Themes"
-        body="Explore a galaxy of community-built starter themes."
-      />
-      <Card
-        href="https://astro.build/chat/"
-        title="Community"
-        body="Come say hi to our amazing Discord community. ❤️"
-      />
-    </ul>
-  </main>
-</Layout>
+<Layout title="Welcome to Kanaquiz!">
+	<Header />
+	<main class="m-auto text-xl">
+		<form action="">
+			<h1 class="mb-4 text-center text-6xl font-bold">
+				Welcome to <span class="text-green-500">Kanaquiz</span>
+			</h1>
+			<p class="mb-8 p-6 text-center">
+				Please <strong>choose</strong> the groups of characters that you'd like to be studying.
+			</p>
 
-<style>
-  main {
-    margin: auto;
-    padding: 1rem;
-    width: 800px;
-    max-width: calc(100% - 2rem);
-    font-size: 20px;
-    line-height: 1.6;
-  }
-  .astro-a {
-    position: absolute;
-    top: -32px;
-    left: 50%;
-    transform: translatex(-50%);
-    width: 220px;
-    height: auto;
-    z-index: -1;
-  }
-  h1 {
-    font-size: 4rem;
-    font-weight: 700;
-    line-height: 1;
-    text-align: center;
-    margin-bottom: 1em;
-  }
-  .text-gradient {
-    background-image: var(--accent-gradient);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-size: 400%;
-    background-position: 0%;
-  }
-  .instructions {
-    margin-bottom: 2rem;
-    border: 1px solid rgba(var(--accent-light), 25%);
-    background: linear-gradient(
-      rgba(var(--accent-dark), 66%),
-      rgba(var(--accent-dark), 33%)
-    );
-    padding: 1.5rem;
-    border-radius: 8px;
-  }
-  .instructions code {
-    font-size: 0.8em;
-    font-weight: bold;
-    background: rgba(var(--accent-light), 12%);
-    color: rgb(var(--accent-light));
-    border-radius: 4px;
-    padding: 0.3em 0.4em;
-  }
-  .instructions strong {
-    color: rgb(var(--accent-light));
-  }
-  .link-card-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
-    gap: 2rem;
-    padding: 0;
-  }
-</style>
+			<!-- Group of Characters -->
+			<div class="mb-4 grid grid-cols-1 gap-8 sm:grid-cols-2">
+				<div
+					class="relative divide-y-2 divide-gray-200 overflow-hidden rounded-lg border-2 dark:divide-gray-400 dark:border-gray-400"
+				>
+					<!-- Panel Header -->
+					<div class="bg-zinc-200 p-3 text-center dark:bg-zinc-800">
+						<span class="font-bold">Hiragana · ひらがな</span>
+					</div>
+
+					<!-- Panel Body -->
+					<div class="p-3">
+						<div class="choose-row">
+							<label>
+								<input type="checkbox" class="accent-green-500" />
+								<span>a · i · u · e · o</span>
+							</label>
+						</div>
+					</div>
+
+					<!-- Panel Footer -->
+					<div class="bg-zinc-200 p-3 text-center dark:bg-zinc-800">
+						<a href="javascript:;">All</a>
+						<span>&nbsp;&middot;&nbsp;</span>
+						<a href="javascript:;">None</a>
+						<span>&nbsp;&middot;&nbsp;</span>
+						<a href="javascript:;">All alternative</a>
+						<span>&nbsp;&middot;&nbsp;</span>
+						<a href="javascript:;">No alternative</a>
+					</div>
+				</div>
+
+				<div
+					class="relative divide-y-2 divide-gray-200 overflow-hidden rounded-lg border-2 dark:divide-gray-400 dark:border-gray-400"
+				>
+					<!-- Panel Header -->
+					<div class="bg-zinc-200 p-3 text-center dark:bg-zinc-800">
+						<span class="font-bold">Katakana · カタカナ</span>
+					</div>
+
+					<!-- Panel Body -->
+					<div class="p-3">
+						<div class="choose-row">
+							<label>
+								<input type="checkbox" class="accent-green-500" />
+								<span>a · i · u · e · o</span>
+							</label>
+						</div>
+					</div>
+
+					<!-- Panel Footer -->
+					<div class="bg-zinc-200 p-3 text-center dark:bg-zinc-800">
+						<a href="javascript:;">All</a>
+						<span>&nbsp;&middot;&nbsp;</span>
+						<a href="javascript:;">None</a>
+						<span>&nbsp;&middot;&nbsp;</span>
+						<a href="javascript:;">All alternative</a>
+						<span>&nbsp;&middot;&nbsp;</span>
+						<a href="javascript:;">No alternative</a>
+					</div>
+				</div>
+			</div>
+
+			<!-- Start the quiz -->
+			<div class="p-6 text-center">
+				<button
+					class="rounded-md bg-zinc-400 p-2 px-4 transition-transform hover:scale-105 dark:bg-zinc-500"
+				>
+					<span class="text-zinc-100">Start the Quiz!</span>
+				</button>
+			</div>
+		</form>
+	</main>
+</Layout>
