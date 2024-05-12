@@ -10,18 +10,3 @@ import Quiz from '../components/Quiz.astro'
 		<Quiz />
 	</main>
 </Layout>
-<script>
-	// Hover function on the "choose-row" divs:
-	var data_kana_elements = document.querySelectorAll('[data-kana]')
-	data_kana_elements.forEach((element) => {
-		// On Mouse Over change the text to the kana version
-		element.addEventListener('mouseover', (event) => {
-			element.innerHTML = element.getAttribute('data-kana')
-		})
-
-		// On Mouse Over change the text to the romaji version
-		element.addEventListener('mouseout', (event) => {
-			element.innerHTML = element.getAttribute('data-romaji')
-		})
-	})
-</script>

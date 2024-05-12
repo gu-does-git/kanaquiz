@@ -17,9 +17,7 @@ const showGroupRows = (whichKana, showAlternatives, showSimilars = false) => {
 			rows.push({
 				key: idx,
 				groupName: groupName,
-				selected: null,
-				characters: thisKana[groupName].characters,
-				handleToggleSelect: null
+				characters: thisKana[groupName].characters
 			})
 		}
 	})
@@ -33,7 +31,7 @@ const katakanaGroupRows = showGroupRows('katakana', false, false)
 
 <form action="">
 	<h1 class="mb-4 text-center text-6xl font-bold">
-		Welcome to <span class="text-green-500">Kanaquiz</span>
+		Welcome to <span class="text-green-500">KanaQuiz</span>
 	</h1>
 	<p class="mb-8 p-6 text-center">
 		Please <strong>choose</strong> the groups of characters that you'd like to be studying.
@@ -55,7 +53,7 @@ const katakanaGroupRows = showGroupRows('katakana', false, false)
 					hiraganaGroupRows.map((item) => (
 						<div class="choose-row inline-flex items-center">
 							<label class="cursor-pointer">
-								<input type="checkbox" class="accent-green-500" />
+								<input type="checkbox" class="accent-green-500" data-type="hiragana" />
 								<span
 									class="font-jp text-base"
 									data-kana={Object.keys(item.characters)
@@ -77,13 +75,29 @@ const katakanaGroupRows = showGroupRows('katakana', false, false)
 
 			<!-- Panel Footer -->
 			<div class="bg-slate-200 p-3 text-center dark:bg-slate-800">
-				<a href="javascript:;" class="transition-colors hover:text-green-500">All</a>
+				<a
+					href="javascript:;"
+					data-option="hiragana"
+					class="footer-options footer-options-all transition-colors hover:text-green-500">All</a
+				>
 				<span>&nbsp;&middot;&nbsp;</span>
-				<a href="javascript:;" class="transition-colors hover:text-green-500">None</a>
+				<a
+					href="javascript:;"
+					data-option="hiragana"
+					class="footer-options footer-options-none transition-colors hover:text-green-500">None</a
+				>
 				<span>&nbsp;&middot;&nbsp;</span>
-				<a href="javascript:;" class="transition-colors hover:text-green-500">All alternative</a>
+				<a
+					href="javascript:;"
+					data-option="hiragana"
+					class="footer-options transition-colors hover:text-green-500">All alternative</a
+				>
 				<span>&nbsp;&middot;&nbsp;</span>
-				<a href="javascript:;" class="transition-colors hover:text-green-500">No alternative</a>
+				<a
+					href="javascript:;"
+					data-option="hiragana"
+					class="footer-options transition-colors hover:text-green-500">No alternative</a
+				>
 			</div>
 		</div>
 
@@ -101,7 +115,7 @@ const katakanaGroupRows = showGroupRows('katakana', false, false)
 					katakanaGroupRows.map((item) => (
 						<div class="choose-row inline-flex items-center">
 							<label class="cursor-pointer">
-								<input type="checkbox" class="accent-green-500" />
+								<input type="checkbox" class="accent-green-500" data-type="katakana" />
 								<span
 									class="font-jp text-base"
 									data-kana={Object.keys(item.characters)
@@ -123,13 +137,29 @@ const katakanaGroupRows = showGroupRows('katakana', false, false)
 
 			<!-- Panel Footer -->
 			<div class="bg-slate-200 p-3 text-center dark:bg-slate-800">
-				<a href="javascript:;" class="transition-colors hover:text-green-500">All</a>
+				<a
+					href="javascript:;"
+					data-option="katakana"
+					class="footer-options footer-options-all transition-colors hover:text-green-500">All</a
+				>
 				<span>&nbsp;&middot;&nbsp;</span>
-				<a href="javascript:;" class="transition-colors hover:text-green-500">None</a>
+				<a
+					href="javascript:;"
+					data-option="katakana"
+					class="footer-options footer-options-none transition-colors hover:text-green-500">None</a
+				>
 				<span>&nbsp;&middot;&nbsp;</span>
-				<a href="javascript:;" class="transition-colors hover:text-green-500">All alternative</a>
+				<a
+					href="javascript:;"
+					data-option="katakana"
+					class="footer-options transition-colors hover:text-green-500">All alternative</a
+				>
 				<span>&nbsp;&middot;&nbsp;</span>
-				<a href="javascript:;" class="transition-colors hover:text-green-500">No alternative</a>
+				<a
+					href="javascript:;"
+					data-option="katakana"
+					class="footer-options transition-colors hover:text-green-500">No alternative</a
+				>
 			</div>
 		</div>
 	</div>
@@ -143,3 +173,44 @@ const katakanaGroupRows = showGroupRows('katakana', false, false)
 		</button>
 	</div>
 </form>
+<script>
+	// Hover function on the "choose-row" divs:
+	var data_kana_elements = document.querySelectorAll('[data-kana]')
+	data_kana_elements.forEach((element) => {
+		// On Mouse Over change the text to the kana version
+		element.addEventListener('mouseover', (event) => {
+			element.innerHTML = element.getAttribute('data-kana')
+		})
+
+		// On Mouse Over change the text to the romaji version
+		element.addEventListener('mouseout', (event) => {
+			element.innerHTML = element.getAttribute('data-romaji')
+		})
+	})
+
+	// Select All Options from one group
+	var footer_options_all = document.querySelectorAll('.footer-options-all')
+	footer_options_all.forEach((element) => {
+		element.addEventListener('click', (event) => {
+			var checkboxes = document.querySelectorAll(
+				`input[type="checkbox"][data-type="${element.getAttribute('data-option')}"]`
+			)
+			checkboxes.forEach((element) => {
+				element.checked = true
+			})
+		})
+	})
+
+	// De-select All Options from one group
+	var footer_options_none = document.querySelectorAll('.footer-options-none')
+	footer_options_none.forEach((element) => {
+		element.addEventListener('click', (event) => {
+			var checkboxes = document.querySelectorAll(
+				`input[type="checkbox"][data-type="${element.getAttribute('data-option')}"]`
+			)
+			checkboxes.forEach((element) => {
+				element.checked = false
+			})
+		})
+	})
+</script>
