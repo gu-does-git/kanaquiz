@@ -41,3 +41,4 @@ See live at https://kana.pro/
 [pReact Integration](https://docs.astro.build/en/guides/integrations-guide/preact/)
 [astro-themes](https://github.com/alex-grover/astro-themes)
 [astro-icon](https://github.com/natemoo-re/astro-icon)
+[Astro Google Fonts Optimizer](https://github.com/sebholstein/astro-google-fonts-optimizer)

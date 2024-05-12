@@ -5,6 +5,7 @@ interface Props {
 
 const { title } = Astro.props
 import Themes from 'astro-themes'
+import { GoogleFontsOptimizer } from 'astro-google-fonts-optimizer'
 ---
 
 <!doctype html>
@@ -17,6 +18,9 @@ import Themes from 'astro-themes'
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
+		<GoogleFontsOptimizer
+			url="https://fonts.googleapis.com/css2?family=Rubik:wght@200;400;500;700&family=Noto+Sans+JP:wght@100..900&display=swap"
+		/>
 	</head>
 	<body
 		class="container mx-auto bg-slate-100 px-4 pb-4 text-slate-700 dark:bg-slate-900 dark:text-slate-100"
