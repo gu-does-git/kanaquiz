@@ -12,7 +12,7 @@ export function getStaticPaths() {
 const { stage } = Astro.params
 ---
 
-<Layout title="Welcome to Kanaquiz!">
+<Layout title={'KanaQuiz | Stage ' + stage}>
 	<Header />
 	<main class="m-auto text-xl">
 		{stage == '1' && <Stage1 />}

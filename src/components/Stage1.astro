@@ -1,41 +1,70 @@
 <script>
 	import { stage, $stage1 } from '../stores/quiz.js'
 
-	// // stage
-	// stage.subscribe((value, oldValue) => {
-	// 	document.getElementById('store-stage').innerHTML = value.toString()
-	// })
+	// Go back to initial page if stage is not this one.
+	if (stage.get() != '1') {
+		stage.set('0')
+		window.location.href = '/'
+	} else {
+		// If the stage is 1, do the animation and show the questions
+		setTimeout(() => {
+			// Shows the description
+			document.getElementById('description').classList.remove('opacity-0')
+			document.getElementById('description').classList.add('animate-fade-in')
+			setTimeout(() => {
+				// Hides the description
+				document.getElementById('description').classList.remove('animate-fade-in')
+				document.getElementById('description').classList.add('animate-fade-out')
+				document.getElementById('description').classList.add('opacity-0')
 
-	// // $stage0
-	// $stage0.subscribe((value, oldValue) => {
-	// 	const node = document.getElementById('Stage0-list')
-	// 	console.log(value)
-	// 	node.innerHTML = JSON.stringify(value, null, '\t')
-	// })
+				// Shows the questions
+				setTimeout(() => {
+					document.getElementById('description').classList.add('hidden')
+					document.getElementById('parent').classList.remove('opacity-0')
+					document.getElementById('parent').classList.add('animate-fade-in')
+				}, 500)
+			}, 1000)
+		}, 500)
+	}
+
+	// $stage1
+	$stage1.subscribe((value, oldValue) => {
+		console.log(value)
+	})
 </script>
 
-<!-- Previous Result / Question -->
-<div
-	class="mx-auto block w-2/5 min-w-80 rounded-lg border-2 bg-slate-200 py-2 text-center dark:bg-slate-800"
->
-	<h1 class="text-base lg:text-lg">Let's go! Which character is this?</h1>
+<!-- Stage Description -->
+<div id="description" class="py-5 text-center opacity-0 transition-opacity">
+	<h1 class="mb-4 text-2xl lg:text-4xl">Stage 1</h1>
+	<p class="text-lg lg:text-xl">Choose one option!</p>
 </div>
 
-<!-- Character  -->
-<div class="my-16 mt-12 text-center lg:my-20 lg:mt-16">
-	<h1 class="align-middle font-jp text-8xl lg:text-9xl">は</h1>
-</div>
+<!-- Parent div -->
+<div id="parent" class="opacity-0 transition-opacity">
+	<!-- Previous Result / Question -->
+	<div
+		class="mx-auto block w-2/5 min-w-80 rounded-lg border-2 bg-slate-200 py-2 text-center dark:bg-slate-800"
+	>
+		<h1 class="text-base lg:text-lg">Let's go! Which character is this?</h1>
+	</div>
 
-<!-- Answers -->
+	<!-- Character  -->
+	<div class="my-16 mt-12 text-center lg:my-20 lg:mt-16">
+		<h1 class="align-middle font-jp text-8xl lg:text-9xl">
+			<span>ちょ</span>
+		</h1>
+	</div>
 
-<div class="mx-auto grid w-2/5 min-w-80 grid-cols-3 gap-10 xl:gap-20">
-	<button class="rounded-lg border-2 bg-slate-200 py-4 text-lg dark:bg-slate-800 xl:text-2xl"
-		>fa</button
-	>
-	<button class="rounded-lg border-2 bg-slate-200 py-4 text-lg dark:bg-slate-800 xl:text-2xl"
-		>su</button
-	>
-	<button class="rounded-lg border-2 bg-slate-200 py-4 text-lg dark:bg-slate-800 xl:text-2xl"
-		>de</button
-	>
+	<!-- Answers -->
+	<div class="mx-auto grid w-2/5 min-w-80 grid-cols-3 gap-10 xl:gap-20">
+		<button class="rounded-lg border-2 bg-slate-200 py-4 text-lg dark:bg-slate-800 xl:text-2xl"
+			>fa</button
+		>
+		<button class="rounded-lg border-2 bg-slate-200 py-4 text-lg dark:bg-slate-800 xl:text-2xl"
+			>su</button
+		>
+		<button class="rounded-lg border-2 bg-slate-200 py-4 text-lg dark:bg-slate-800 xl:text-2xl"
+			>de</button
+		>
+	</div>
 </div>
