@@ -174,7 +174,7 @@ import { check } from "prettier"
 		})
 	})
 
-	import { stage, $stage0 } from '../stores/quiz.js'
+	import { stage, $stage1 } from '../stores/quiz.js'
 	document.querySelector("#stage0-form").addEventListener("submit", (e) => {
 		e.preventDefault(); //stop form from submitting
 		const formData = new FormData(e.target);
@@ -183,7 +183,7 @@ import { check } from "prettier"
 		const selectedOptions = Object.keys(formProps);
 
 		stage.set('1')
-		$stage0.setKey('selectedOptions', JSON.stringify(selectedOptions));
+		$stage1.setKey('selectedOptions', JSON.stringify(selectedOptions));
 
 		window.location.href = 'quiz/1';
 	});
