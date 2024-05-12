@@ -1,0 +1,145 @@
+---
+import { kanaDictionary } from '../data/kanaDic.js'
+
+const showGroupRows = (whichKana, showAlternatives, showSimilars = false) => {
+	const thisKana = kanaDictionary[whichKana]
+	let rows = []
+	Object.keys(thisKana).forEach((groupName, idx) => {
+		// if(groupName == "h_group11_a" || groupName == "k_group13_a")
+		//   rows.push(this.alternativeToggleRow(whichKana, "_a", showAlternatives));
+		// if(groupName == "k_group11_s")
+		//   rows.push(this.alternativeToggleRow(whichKana, "_s", showSimilars));
+
+		if (
+			(!groupName.endsWith('a') || showAlternatives) &&
+			(!groupName.endsWith('s') || showSimilars)
+		) {
+			rows.push({
+				key: idx,
+				groupName: groupName,
+				selected: null,
+				characters: thisKana[groupName].characters,
+				handleToggleSelect: null
+			})
+		}
+	})
+
+	return rows
+}
+
+const hiraganaGroupRows = showGroupRows('hiragana', false, false)
+const katakanaGroupRows = showGroupRows('katakana', false, false)
+---
+
+<form action="">
+	<h1 class="mb-4 text-center text-6xl font-bold">
+		Welcome to <span class="text-green-500">Kanaquiz</span>
+	</h1>
+	<p class="mb-8 p-6 text-center">
+		Please <strong>choose</strong> the groups of characters that you'd like to be studying.
+	</p>
+
+	<!-- Group of Characters -->
+	<div class="mb-4 grid grid-cols-1 gap-8 sm:grid-cols-2">
+		<div
+			class="relative divide-y-2 divide-gray-200 overflow-hidden rounded-lg border-2 dark:divide-gray-400 dark:border-gray-400"
+		>
+			<!-- Panel Header -->
+			<div class="bg-slate-200 p-3 text-center dark:bg-slate-800">
+				<span class="font-bold">Hiragana · <span class="font-jp">ひらがな</span></span>
+			</div>
+
+			<!-- Panel Body -->
+			<div class="grid grid-cols-1 gap-1 p-3">
+				{
+					hiraganaGroupRows.map((item) => (
+						<div class="choose-row inline-flex items-center">
+							<label class="cursor-pointer">
+								<input type="checkbox" class="accent-green-500" />
+								<span
+									class="font-jp text-base"
+									data-kana={Object.keys(item.characters)
+										.map((char) => char[0])
+										.join(' · ')}
+									data-romaji={Object.keys(item.characters)
+										.map((char) => item.characters[char][0])
+										.join(' · ')}
+								>
+									{Object.keys(item.characters)
+										.map((char) => item.characters[char][0])
+										.join(' · ')}
+								</span>
+							</label>
+						</div>
+					))
+				}
+			</div>
+
+			<!-- Panel Footer -->
+			<div class="bg-slate-200 p-3 text-center dark:bg-slate-800">
+				<a href="javascript:;" class="transition-colors hover:text-green-500">All</a>
+				<span>&nbsp;&middot;&nbsp;</span>
+				<a href="javascript:;" class="transition-colors hover:text-green-500">None</a>
+				<span>&nbsp;&middot;&nbsp;</span>
+				<a href="javascript:;" class="transition-colors hover:text-green-500">All alternative</a>
+				<span>&nbsp;&middot;&nbsp;</span>
+				<a href="javascript:;" class="transition-colors hover:text-green-500">No alternative</a>
+			</div>
+		</div>
+
+		<div
+			class="relative divide-y-2 divide-gray-200 overflow-hidden rounded-lg border-2 dark:divide-gray-400 dark:border-gray-400"
+		>
+			<!-- Panel Header -->
+			<div class="bg-slate-200 p-3 text-center dark:bg-slate-800">
+				<span class="font-bold">Katakana · <span class="font-jp">カタカナ</span></span>
+			</div>
+
+			<!-- Panel Body -->
+			<div class="grid grid-cols-1 gap-1 p-3">
+				{
+					katakanaGroupRows.map((item) => (
+						<div class="choose-row inline-flex items-center">
+							<label class="cursor-pointer">
+								<input type="checkbox" class="accent-green-500" />
+								<span
+									class="font-jp text-base"
+									data-kana={Object.keys(item.characters)
+										.map((char) => char[0])
+										.join(' · ')}
+									data-romaji={Object.keys(item.characters)
+										.map((char) => item.characters[char][0])
+										.join(' · ')}
+								>
+									{Object.keys(item.characters)
+										.map((char) => item.characters[char][0])
+										.join(' · ')}
+								</span>
+							</label>
+						</div>
+					))
+				}
+			</div>
+
+			<!-- Panel Footer -->
+			<div class="bg-slate-200 p-3 text-center dark:bg-slate-800">
+				<a href="javascript:;" class="transition-colors hover:text-green-500">All</a>
+				<span>&nbsp;&middot;&nbsp;</span>
+				<a href="javascript:;" class="transition-colors hover:text-green-500">None</a>
+				<span>&nbsp;&middot;&nbsp;</span>
+				<a href="javascript:;" class="transition-colors hover:text-green-500">All alternative</a>
+				<span>&nbsp;&middot;&nbsp;</span>
+				<a href="javascript:;" class="transition-colors hover:text-green-500">No alternative</a>
+			</div>
+		</div>
+	</div>
+
+	<!-- Start the quiz -->
+	<div class="p-6 text-center">
+		<button
+			class="rounded-md bg-slate-400 p-2 px-4 transition-transform hover:scale-105 dark:bg-slate-500"
+		>
+			<span class="text-slate-100">Start the Quiz!</span>
+		</button>
+	</div>
+</form>
