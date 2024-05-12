@@ -21,9 +21,9 @@ See live at https://kana.pro/
 - [ ] review all the issues open in the OG repo and lay out a plan to build or help.
 - [ ] build a todo based on the complexity of the tasks.
 
-- [ ] refactor the project as a whole to ASTRO SSG for _performance_
+- [x] refactor the project as a whole to ASTRO SSG for _performance_ **WIP**
 - [ ] add classic Japanese "wrong" or "right" sounds
-- [ ] add dark theme
+- [x] add dark theme
 - [ ] make question "auto-send" if chars on input are correct
 - [ ] add real words using kana at the end (stage 4)
 - [ ] maybe create a settings popup (to store theme and if sounds)
