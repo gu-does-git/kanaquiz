@@ -25,8 +25,13 @@ const showGroupRows = (whichKana, showAlternatives, showSimilars = false) => {
 	return rows
 }
 
+var groupRows = [
+	{ key: 'hiragana', rows: showGroupRows('hiragana', false, false) },
+	{ key: 'katakana', rows: showGroupRows('katakana', false, false) }
+]
 const hiraganaGroupRows = showGroupRows('hiragana', false, false)
 const katakanaGroupRows = showGroupRows('katakana', false, false)
+
 ---
 
 <form action="">
@@ -39,129 +44,72 @@ const katakanaGroupRows = showGroupRows('katakana', false, false)
 
 	<!-- Group of Characters -->
 	<div class="mb-4 grid grid-cols-1 gap-8 sm:grid-cols-2">
-		<div
-			class="relative divide-y-2 divide-gray-200 overflow-hidden rounded-lg border-2 dark:divide-gray-400 dark:border-gray-400"
-		>
-			<!-- Panel Header -->
-			<div class="bg-slate-200 p-3 text-center dark:bg-slate-800">
-				<span class="font-bold">Hiragana · <span class="font-jp">ひらがな</span></span>
-			</div>
-
-			<!-- Panel Body -->
-			<div class="grid grid-cols-1 gap-1 p-3">
-				{
-					hiraganaGroupRows.map((item) => (
-						<div class="choose-row inline-flex items-center">
-							<label class="cursor-pointer">
-								<input type="checkbox" class="accent-green-500" data-type="hiragana" />
-								<span
-									class="font-jp text-base"
-									data-kana={Object.keys(item.characters)
-										.map((char) => char[0])
-										.join(' · ')}
-									data-romaji={Object.keys(item.characters)
-										.map((char) => item.characters[char][0])
-										.join(' · ')}
-								>
-									{Object.keys(item.characters)
-										.map((char) => item.characters[char][0])
-										.join(' · ')}
-								</span>
-							</label>
-						</div>
-					))
-				}
-			</div>
-
-			<!-- Panel Footer -->
-			<div class="bg-slate-200 p-3 text-center dark:bg-slate-800">
-				<a
-					href="javascript:;"
-					data-option="hiragana"
-					class="footer-options footer-options-all transition-colors hover:text-green-500">All</a
-				>
-				<span>&nbsp;&middot;&nbsp;</span>
-				<a
-					href="javascript:;"
-					data-option="hiragana"
-					class="footer-options footer-options-none transition-colors hover:text-green-500">None</a
-				>
-				<span>&nbsp;&middot;&nbsp;</span>
-				<a
-					href="javascript:;"
-					data-option="hiragana"
-					class="footer-options transition-colors hover:text-green-500">All alternative</a
-				>
-				<span>&nbsp;&middot;&nbsp;</span>
-				<a
-					href="javascript:;"
-					data-option="hiragana"
-					class="footer-options transition-colors hover:text-green-500">No alternative</a
-				>
-			</div>
-		</div>
-
-		<div
-			class="relative divide-y-2 divide-gray-200 overflow-hidden rounded-lg border-2 dark:divide-gray-400 dark:border-gray-400"
-		>
-			<!-- Panel Header -->
-			<div class="bg-slate-200 p-3 text-center dark:bg-slate-800">
-				<span class="font-bold">Katakana · <span class="font-jp">カタカナ</span></span>
-			</div>
-
-			<!-- Panel Body -->
-			<div class="grid grid-cols-1 gap-1 p-3">
-				{
-					katakanaGroupRows.map((item) => (
-						<div class="choose-row inline-flex items-center">
-							<label class="cursor-pointer">
-								<input type="checkbox" class="accent-green-500" data-type="katakana" />
-								<span
-									class="font-jp text-base"
-									data-kana={Object.keys(item.characters)
-										.map((char) => char[0])
-										.join(' · ')}
-									data-romaji={Object.keys(item.characters)
-										.map((char) => item.characters[char][0])
-										.join(' · ')}
-								>
-									{Object.keys(item.characters)
-										.map((char) => item.characters[char][0])
-										.join(' · ')}
-								</span>
-							</label>
-						</div>
-					))
-				}
-			</div>
-
-			<!-- Panel Footer -->
-			<div class="bg-slate-200 p-3 text-center dark:bg-slate-800">
-				<a
-					href="javascript:;"
-					data-option="katakana"
-					class="footer-options footer-options-all transition-colors hover:text-green-500">All</a
-				>
-				<span>&nbsp;&middot;&nbsp;</span>
-				<a
-					href="javascript:;"
-					data-option="katakana"
-					class="footer-options footer-options-none transition-colors hover:text-green-500">None</a
-				>
-				<span>&nbsp;&middot;&nbsp;</span>
-				<a
-					href="javascript:;"
-					data-option="katakana"
-					class="footer-options transition-colors hover:text-green-500">All alternative</a
-				>
-				<span>&nbsp;&middot;&nbsp;</span>
-				<a
-					href="javascript:;"
-					data-option="katakana"
-					class="footer-options transition-colors hover:text-green-500">No alternative</a
-				>
-			</div>
-		</div>
+		{groupRows.map((group) => (
+                        <div
+                class="relative divide-y-2 divide-gray-200 overflow-hidden rounded-lg border-2 dark:divide-gray-400 dark:border-gray-400"
+            >
+                <!-- Panel Header -->
+                <div class="bg-slate-200 p-3 text-center dark:bg-slate-800">
+                    <span class="font-bold" set:html={group.key == 'hiragana'? 'Hiragana · <span class="font-jp">ひらがな' : 'Katakana · <span class="font-jp">カタカナ'}>
+                        
+                        </span></span>
+                </div>
+    
+                <!-- Panel Body -->
+                <div class="grid grid-cols-1 gap-1 p-3">
+                    {
+                        group.rows.map((item) => (
+                            <div class="choose-row inline-flex items-center">
+                                <label class="cursor-pointer">
+                                    <input type="checkbox" class="accent-green-500" data-type={group.key} />
+                                    <span
+                                        class="font-jp text-base"
+                                        data-kana={Object.keys(item.characters)
+                                            .map((char) => char[0])
+                                            .join(' · ')}
+                                        data-romaji={Object.keys(item.characters)
+                                            .map((char) => item.characters[char][0])
+                                            .join(' · ')}
+                                    >
+                                        {Object.keys(item.characters)
+                                            .map((char) => item.characters[char][0])
+                                            .join(' · ')}
+                                    </span>
+                                </label>
+                            </div>
+                        ))
+                    }
+                </div>
+    
+                <!-- Panel Footer -->
+                <div class="bg-slate-200 p-3 text-center dark:bg-slate-800">
+                    <a
+                        href="javascript:;"
+                        data-option={group.key}
+                        class="footer-options footer-options-all transition-colors hover:text-green-500">All</a
+                    >
+                    <span>&nbsp;&middot;&nbsp;</span>
+                    <a
+                        href="javascript:;"
+                        data-option={group.key}
+                        class="footer-options footer-options-none transition-colors hover:text-green-500">None</a
+                    >
+                    <span>&nbsp;&middot;&nbsp;</span>
+                    <a
+                        href="javascript:;"
+                        data-option={group.key}
+                        class="footer-options transition-colors hover:text-green-500">All alternative</a
+                    >
+                    <span>&nbsp;&middot;&nbsp;</span>
+                    <a
+                        href="javascript:;"
+                        data-option={group.key}
+                        class="footer-options transition-colors hover:text-green-500">No alternative</a
+                    >
+                </div>
+            </div>
+            ))}
+        
 	</div>
 
 	<!-- Start the quiz -->
@@ -178,12 +126,12 @@ const katakanaGroupRows = showGroupRows('katakana', false, false)
 	var data_kana_elements = document.querySelectorAll('[data-kana]')
 	data_kana_elements.forEach((element) => {
 		// On Mouse Over change the text to the kana version
-		element.addEventListener('mouseover', (event) => {
+		element.addEventListener('mouseover', () => {
 			element.innerHTML = element.getAttribute('data-kana')
 		})
 
 		// On Mouse Over change the text to the romaji version
-		element.addEventListener('mouseout', (event) => {
+		element.addEventListener('mouseout', () => {
 			element.innerHTML = element.getAttribute('data-romaji')
 		})
 	})
@@ -191,7 +139,7 @@ const katakanaGroupRows = showGroupRows('katakana', false, false)
 	// Select All Options from one group
 	var footer_options_all = document.querySelectorAll('.footer-options-all')
 	footer_options_all.forEach((element) => {
-		element.addEventListener('click', (event) => {
+		element.addEventListener('click', () => {
 			var checkboxes = document.querySelectorAll(
 				`input[type="checkbox"][data-type="${element.getAttribute('data-option')}"]`
 			)
@@ -204,7 +152,7 @@ const katakanaGroupRows = showGroupRows('katakana', false, false)
 	// De-select All Options from one group
 	var footer_options_none = document.querySelectorAll('.footer-options-none')
 	footer_options_none.forEach((element) => {
-		element.addEventListener('click', (event) => {
+		element.addEventListener('click', () => {
 			var checkboxes = document.querySelectorAll(
 				`input[type="checkbox"][data-type="${element.getAttribute('data-option')}"]`
 			)
