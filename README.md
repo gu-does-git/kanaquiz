@@ -22,11 +22,16 @@ See live at https://kana.pro/
 - [ ] build a todo based on the complexity of the tasks.
 
 - [x] refactor the project as a whole to ASTRO SSG for _performance_ **WIP**
-- [ ] add classic Japanese "wrong" or "right" sounds
+- [x] add classic Japanese "wrong" or "right" sounds
 - [x] add dark theme
 - [ ] make question "auto-send" if chars on input are correct
 - [ ] add real words using kana at the end (stage 4)
 - [ ] maybe create a settings popup (to store theme and if sounds)
+
+#### Stage1
+
+- [ ] add a success animation using confetti-js - [example](https://github.com/themesberg/flowbite-astro-admin-dashboard/blob/478b5ae818b31af10f01fd08a6a49624235d6933/src/components/ConfettiLauncher.astro#L4)
+- [ ] find a way to transition more smoothly between stages
 
 ### Futurely
 
