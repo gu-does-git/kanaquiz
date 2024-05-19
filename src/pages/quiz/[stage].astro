@@ -2,7 +2,7 @@
 import Layout from '../../layouts/Layout.astro'
 import Header from '../../components/Header.astro'
 
-import Stage1 from '../../components/Stage1.astro'
+import Stage1 from '../../components/Stage1.tsx'
 import Stage2 from '../../components/Stage2.astro'
 
 export function getStaticPaths() {
@@ -15,7 +15,7 @@ const { stage } = Astro.params
 <Layout title={'KanaQuiz | Stage ' + stage}>
 	<Header />
 	<main class="m-auto text-xl">
-		{stage == '1' && <Stage1 />}
+		{stage == '1' && <Stage1 client:load />}
 		{stage == '2' && <Stage2 />}
 	</main>
 </Layout>
