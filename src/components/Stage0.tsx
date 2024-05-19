@@ -1,9 +1,8 @@
 import { useRef } from 'preact/hooks'
 import { stage, $stage1 } from '../stores/quiz'
 import { kanaDictionary } from '../data/kanaDic'
-import { check } from 'prettier'
 
-export default function Stage00() {
+export default function Stage0() {
 	/**
 	 * Creates an array of rows for a given kana type.
 	 *
