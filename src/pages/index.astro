@@ -1,12 +1,12 @@
 ---
 import Layout from '../layouts/Layout.astro'
 import Header from '../components/Header.astro'
-import Stage0 from '../components/Stage0.astro'
+import Stage0 from '../components/Stage0.tsx'
 ---
 
 <Layout title="Welcome to Kanaquiz!">
 	<Header />
 	<main class="m-auto text-xl">
-		<Stage0 />
+		<Stage0 client:load />
 	</main>
 </Layout>
